@@ -1,6 +1,6 @@
 {
     "name": "panada/http",
-    "description": "HTTP protocol asbtraction and implements the PSR-7 implemenetation",
+    "description": "Panada HTTP package",
     "homepage": "http://panadaframework.com/",
     "license": "MIT",
     "authors": [
