@@ -100,8 +100,9 @@ class Uri extends \Panada\Utility\Factory
         $this->pathSegment      = explode('/', $this->pathInfo);
         $this->relLocation      = str_replace($this->pathInfo, '', rtrim($_SERVER['REQUEST_URI'], '/'));
         $this->requestMethod    = $_SERVER['REQUEST_METHOD'];
-        $this->host             = $_SERVER['HTTP_HOST'];
+        $this->host             = $_SERVER['SERVER_NAME'];
         $this->port             = $_SERVER['SERVER_PORT'];
+        $this->scheme           = preg_replace('/[^a-z]/i', '', $_SERVER['SERVER_PROTOCOL']);
         
         if(isset($_SERVER['QUERY_STRING'])) {
             $this->queryString  = $_SERVER['QUERY_STRING'];
@@ -123,6 +124,18 @@ class Uri extends \Panada\Utility\Factory
         echo 'location: '.$this->location.'<br>';
         print_r($this->pathSegment);
         exit;
+    }
+    
+    public function setScheme($scheme)
+    {
+        $this->scheme = $scheme;
+        
+        return $this;
+    }
+    
+    public function getScheme()
+    {
+        return $this->scheme;
     }
     
     public function setPort($port)
