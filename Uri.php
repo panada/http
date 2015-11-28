@@ -98,7 +98,7 @@ class Uri extends \Panada\Utility\Factory
         $this->pathInfo         = trim(strtok(str_replace($scriptName, '', $requestURI), '?'), '/');
         $this->location         = rtrim(strtok($_SERVER['REQUEST_URI'], '?'), '/');
         $this->pathSegment      = explode('/', $this->pathInfo);
-        $this->relLocation      = str_replace($this->pathInfo, '', rtrim($_SERVER['REQUEST_URI'], '/'));
+        $this->relLocation      = str_replace($this->pathInfo, '', rtrim($_SERVER['PATH_INFO'], '/'));
         $this->requestMethod    = $_SERVER['REQUEST_METHOD'];
         $this->host             = $_SERVER['SERVER_NAME'];
         $this->port             = $_SERVER['SERVER_PORT'];
@@ -221,6 +221,7 @@ class Uri extends \Panada\Utility\Factory
     public function setLocation($location)
     {
         $this->location = $location;
+        $this->relLocation = $location;
         
         return $this;
     }
