@@ -157,7 +157,7 @@ class Response extends \Panada\Utility\Factory
     public function redirect($location, $statusCode = 302)
     {
         if (substr($location,0,4) != 'http') {
-            $location = \Panada\Request\Uri::getInstance()->location(ltrim($location, '/'));
+            $location = Uri::getInstance()->location(ltrim($location, '/'));
         }
         
         self::$statusText = 'Location: '.$location;
