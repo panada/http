@@ -8,9 +8,10 @@ namespace Panada\Http;
  * So if we have an URI like this: http://localhost:8081/project/panada/labs/v2POC/public/index.php/foo/bar/john/doe
  * where:
  *  - frontController: index.php
- *  - basePath: /project/panada/labs/v2POC/public/; a folder where front controller located
+ *  - basePath: /project/panada/labs/v2POC/public/; a folder where front controller located. use for asstet
  *  - pathInfo: foo/bar/john/doe; every path right after frontController
  *  - location: /project/panada/labs/v2POC/public/index.php/foo/bar/john/doe; REQUEST URI excluding query
+ *  - relLocation: /project/panada/labs/v2POC/public/index.php/; use for redirect or url href
  *
  * @author kandar <iskandarsoesman@gmail.com>
  */
@@ -98,7 +99,7 @@ class Uri extends \Panada\Utility\Factory
         $this->pathInfo         = trim(strtok(str_replace($scriptName, '', $requestURI), '?'), '/');
         $this->location         = rtrim(strtok($_SERVER['REQUEST_URI'], '?'), '/');
         $this->pathSegment      = explode('/', $this->pathInfo);
-        $this->relLocation      = str_replace($this->pathInfo, '', rtrim($_SERVER['PATH_INFO'], '/'));
+        $this->relLocation      = str_replace($this->pathInfo, '', $this->location);
         $this->requestMethod    = $_SERVER['REQUEST_METHOD'];
         $this->host             = $_SERVER['SERVER_NAME'];
         $this->port             = $_SERVER['SERVER_PORT'];
