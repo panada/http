@@ -91,12 +91,22 @@ class Uri extends \Panada\Utility\Factory
      */
     public function fromServer()
     {
-        $scriptPath             = explode('/', $_SERVER['SCRIPT_NAME']);
-        $this->frontController  = '/'.end($scriptPath);
-        $this->basePath         = $this->config['assetPath'] = str_replace($this->frontController, '', $_SERVER['SCRIPT_NAME']).'/';
+        $this->basePath = str_replace(
+            $_SERVER['DOCUMENT_ROOT'], '', $_SERVER['SCRIPT_FILENAME']
+        );
+        
+        $scriptPath             = explode('/', $_SERVER['SCRIPT_FILENAME']);
+        $this->frontController  = end($scriptPath);
+        
+        $this->basePath = str_replace(
+            $this->frontController, '', $this->basePath
+        );
+        
+        $this->config['assetPath']= $this->basePath;
+        
         $scriptName             = str_replace($this->frontController, '', $_SERVER['SCRIPT_NAME']);
-        $requestURI             = str_replace($this->frontController, '', $_SERVER['REQUEST_URI']);
-        $this->pathInfo         = trim(strtok(str_replace($scriptName, '', $requestURI), '?'), '/');
+        $requestURI             = str_replace($this->basePath.$this->frontController, '', $_SERVER['REQUEST_URI']);
+        $this->pathInfo         = trim(strtok($requestURI, '?'), '/');
         $this->location         = rtrim(strtok($_SERVER['REQUEST_URI'], '?'), '/');
         $this->pathSegment      = explode('/', $this->pathInfo);
         $this->relLocation      = str_replace($this->pathInfo, '', $this->location);
